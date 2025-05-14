@@ -9,6 +9,15 @@ require 'faker'
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+def reset_db
+  # Remove all data from the database
+  Book.destroy_all
+  OwnedBook.destroy_all
+  Shelf.destroy_all
+  Profile.destroy_all
+  User.destroy_all
+end
+
 def create_users
 
   users = [
@@ -37,7 +46,14 @@ def create_books
     {title: "The Phantom Tollbooth"},
     {title: "Leviathan Wakes"},
     {title: "The Count of Monte Cristo"},
-  ]
+    {title: "The Great Gatsby"},
+    {title: "The Catcher in the Rye"},
+    {title: "Nineteen Eighty Four"},
+    {title: "To Kill a Mockingbird"},
+    {title: "Heart of Darkness"},
+    {title: "The Divine Comedy"},
+    {title: "The Little Prince"},
+    ]
 
   books.each do |book|
     Book.create!(
@@ -45,3 +61,56 @@ def create_books
     )
   end
 end
+
+def create_profiles
+  users = User.all
+
+  users.each do |user|
+    Profile.create!(
+      user: user
+    )
+  end
+end
+def create_shelves
+  profiles = Profile.all
+
+  profiles.each do |profile|
+    Shelf.create!(
+      profile: profile
+    )
+  end
+end
+
+def create_owned_books
+  shelves = Shelf.all
+  books = Book.all
+
+  # Add title a Description
+
+  shelves.each do |shelf|
+    # Choose 5 random and unique books
+    random_books = books.sample(5)
+    random_books.each do |book|
+      OwnedBook.create!(
+        shelf: shelf,
+        book: book
+      )
+    end
+  end
+end
+
+def seed_database
+  # The following functions must be called in this order
+  create_users
+  create_books
+  create_profiles
+  create_shelves
+  create_owned_books
+end
+
+puts "Removing old data"
+reset_db
+puts "Data removed"
+puts "Seeding database"
+seed_database
+puts "Seeding Finished"
