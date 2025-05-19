@@ -48,7 +48,7 @@ def create_books
     {title: "The Count of Monte Cristo"},
     {title: "The Great Gatsby"},
     {title: "The Catcher in the Rye"},
-    {title: "Nineteen Eighty Four"},
+    {title: "1984"},
     {title: "To Kill a Mockingbird"},
     {title: "Heart of Darkness"},
     {title: "The Divine Comedy"},
@@ -76,7 +76,9 @@ def create_shelves
 
   profiles.each do |profile|
     Shelf.create!(
-      profile: profile
+      profile: profile,
+      title: "My top 5 books",
+      description: "A list of the best books ever written!"
     )
   end
 end
@@ -93,7 +95,8 @@ def create_owned_books
     random_books.each do |book|
       OwnedBook.create!(
         shelf: shelf,
-        book: book
+        book: book,
+        rating: 5,
       )
     end
   end
