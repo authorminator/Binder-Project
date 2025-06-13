@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   end
 
   resources :shelves, only: [:destroy, :update]
+  resources :bookclubs, only: [:index, :show, :create, :update, :destroy]
 end
