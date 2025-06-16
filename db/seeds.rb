@@ -102,6 +102,11 @@ def create_owned_books
   end
 end
 
+def create_bookclubs
+  name = ["Read it and Weep!", "Shelf Indulgence", "Harry Potter Heads", "Love at First Chapter", "Hearts & Paperbacks", "Spine Breakers"]
+
+end
+
 def seed_database
   # The following functions must be called in this order
   create_users

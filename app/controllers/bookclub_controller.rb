@@ -8,7 +8,7 @@ class BookclubController < ApplicationController
   end
 
   def create
-    @bookclub = Bookclub.new(bookclub_params)
+    @bookclub = current_user.created_bookclubs.new(bookclub_params)
     if @bookclub.save
       render json: { message: 'Bookclub was successfully created.', bookclub: @bookclub }, status: :created
     else
@@ -37,6 +37,6 @@ class BookclubController < ApplicationController
   private
 
   def bookclub_params
-    params.require(:bookclub).permit(:name)
+    params.require(:bookclub).permit(:name, :description)
   end
 end
