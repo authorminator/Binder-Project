@@ -40,6 +40,7 @@ class ShelvesController < ApplicationController
   private
 
   def shelf_params
-    # Only allow a list of trusted parameters through.
+    # something wrong??????????
+    params.require(:shelves).permit(:title, :description, :profile_id)
   end
 end
