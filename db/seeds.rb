@@ -103,8 +103,11 @@ def create_owned_books
 end
 
 def create_bookclubs
-  name = ["Read it and Weep!", "Shelf Indulgence", "Harry Potter Heads", "Love at First Chapter", "Hearts & Paperbacks", "Spine Breakers"]
-
+  names = ["Read it and Weep!", "Shelf Indulgence", "Harry Potter Heads", "Love at First Chapter", "Hearts & Paperbacks", "Spine Breakers"]
+  User.all.each_with_index do |user, index|
+    Bookclub.create!(name: names[index], user: user)
+    Puts "Created Bookclub #{names[index]} with user #{user.email} as the creator."
+  end
 end
 
 def seed_database

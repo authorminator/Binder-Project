@@ -8,7 +8,11 @@ class BookclubController < ApplicationController
   end
 
   def create
-    @bookclub = current_user.created_bookclubs.new(bookclub_params)
+    ActiveRecord::Base.transaction do
+      @bookclub = current_user.created_bookclubs.new(bookclub_params)
+      @bookclub.save!
+      Member.create!(bookclub: @bookclub, user: current_user)
+    end
     if @bookclub.save
       render json: { message: 'Bookclub was successfully created.', bookclub: @bookclub }, status: :created
     else
