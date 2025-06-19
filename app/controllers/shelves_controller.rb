@@ -3,7 +3,7 @@ class ShelvesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   # [Temporarily] skip authenticate_user!
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authenticate_user!, only: [:create, :update]
 
 
   def index
@@ -47,7 +47,6 @@ class ShelvesController < ApplicationController
   private
 
   def shelf_params
-    # something wrong??????????
     params.require(:shelf).permit(:title, :description, :profile_id)
   end
 end
