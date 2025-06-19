@@ -1,11 +1,20 @@
 class ShelvesController < ApplicationController
+  # Turn off CRSF token ( when API use only )
+  skip_before_action :verify_authenticity_token
+
+  # [Temporarily] skip authenticate_user! to use postman
+  # skip_before_action :authenticate_user!, only: [:create, :update, :destroy]
+
+
   def index
     @shelves = Shelf.all
+    render json: @shelves
   end
 
   def show
     @shelf = Shelf.find(params[:id])
     @profile = @shelf.profile
+    render json: @profile
   end
 
   def create
@@ -38,6 +47,6 @@ class ShelvesController < ApplicationController
   private
 
   def shelf_params
-    # Only allow a list of trusted parameters through.
+    params.require(:shelf).permit(:title, :description, :profile_id)
   end
 end
