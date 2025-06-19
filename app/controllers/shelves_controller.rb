@@ -7,7 +7,7 @@ class ShelvesController < ApplicationController
   def show
     @shelf = Shelf.find(params[:id])
     @profile = @shelf.profile
-    render json: @profiles
+    render json: @profile
   end
 
   def create
@@ -41,6 +41,6 @@ class ShelvesController < ApplicationController
 
   def shelf_params
     # something wrong??????????
-    params.require(:shelves).permit(:title, :description, :profile_id)
+    params.require(:shelf).permit(:title, :description, :profile_id)
   end
 end
