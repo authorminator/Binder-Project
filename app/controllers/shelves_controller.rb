@@ -2,8 +2,8 @@ class ShelvesController < ApplicationController
   # Turn off CRSF token ( when API use only )
   skip_before_action :verify_authenticity_token
 
-  # [Temporarily] skip authenticate_user!
-  skip_before_action :authenticate_user!, only: [:create, :update]
+  # [Temporarily] skip authenticate_user! to use postman
+  # skip_before_action :authenticate_user!, only: [:create, :update, :destroy]
 
 
   def index
