@@ -1,4 +1,11 @@
 class ShelvesController < ApplicationController
+  # Turn off CRSF token ( when API use only )
+  skip_before_action :verify_authenticity_token
+
+  # [Temporarily] skip authenticate_user!
+  skip_before_action :authenticate_user!, only: [:create]
+
+
   def index
     @shelves = Shelf.all
     render json: @shelves
