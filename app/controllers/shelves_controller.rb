@@ -1,15 +1,25 @@
 class ShelvesController < ApplicationController
+  # Turn off CRSF token ( when API use only )
+  skip_before_action :verify_authenticity_token
+
+  # [Temporarily] skip authenticate_user! to use postman
+  skip_before_action :authenticate_user!
+
   def index
-    @shelves = Shelf.all
+    @profile = Profile.find(params[:profile_id])
+    @shelves = @profile.shelves
+    render json: @shelves
   end
 
   def show
-    @shelf = Shelf.find(params[:id])
-    @profile = @shelf.profile
+    @profile = Profile.find(params[:profile_id])
+    @shelf = @profile.shelves.find(params[:id])
+    render json: @shelf
   end
 
   def create
-    @shelf = Shelf.new(shelf_params)
+    @profile = Profile.find(params[:profile_id])
+    @shelf = @profile.shelves.new(shelf_params)
     if @shelf.save
       render json: { message: 'Shelf was successfully created.', shelf: @shelf }, status: :created
     else
@@ -18,7 +28,8 @@ class ShelvesController < ApplicationController
   end
 
   def update
-    @shelf = Shelf.find(params[:id])
+    @profile = Profile.find(params[:profile_id])
+    @shelf = @profile.shelves.find(params[:id])
     if @shelf.update(shelf_params)
       render json: { message: 'Shelf was successfully updated.', shelf: @shelf }, status: :ok
     else
@@ -27,7 +38,8 @@ class ShelvesController < ApplicationController
   end
 
   def destroy
-    @shelf = Shelf.find(params[:id])
+    @profile = Profile.find(params[:profile_id])
+    @shelf = @profile.shelves.find(params[:id])
     if @shelf.destroy
       render json: { message: 'Shelf was successfully deleted.' }, status: :ok
     else
@@ -38,6 +50,6 @@ class ShelvesController < ApplicationController
   private
 
   def shelf_params
-    # Only allow a list of trusted parameters through.
+    params.require(:shelf).permit(:title, :description, :profile_id)
   end
 end
