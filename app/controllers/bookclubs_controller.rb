@@ -1,10 +1,16 @@
-class BookclubController < ApplicationController
+class BookclubsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  # for postman
+  skip_before_action :authenticate_user!
+
   def index
     @bookclubs = Bookclub.all
+    render json: @bookclubs
   end
 
   def show
     @bookclub = Bookclub.find(params[:id])
+    render json: @bookclub
   end
 
   def create

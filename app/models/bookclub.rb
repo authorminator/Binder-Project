@@ -1,5 +1,5 @@
 class Bookclub < ApplicationRecord
-  has_many :members
+  has_many :members, dependent: :destroy
   has_many :users, through: :members
   belongs_to :creator, class_name: "User", foreign_key: "user_id"
 
